@@ -1,5 +1,6 @@
 import logging
 import base64
+from datetime import datetime
 import requests
 from backend.app.config import settings
 from backend.app.services.qr import qr_service
