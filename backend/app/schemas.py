@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field, ConfigDict
+from pydantic import BaseModel, EmailStr, Field, ConfigDict, field_validator
 from typing import Optional, List, Any
 from datetime import datetime
 from decimal import Decimal
@@ -49,6 +49,13 @@ class EventResponse(BaseModel):
 # Registration Schemas
 class RegistrationCreate(BaseModel):
     event_id: str
+
+    @field_validator('event_id', mode='before')
+    @classmethod
+    def strip_event_id(cls, v):
+        if isinstance(v, str):
+            return v.strip()
+        return v
     full_name: str
     email: EmailStr
     phone: str

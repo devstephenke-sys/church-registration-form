@@ -1,5 +1,6 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-export const EVENT_ID = import.meta.env.VITE_EVENT_ID || 'd56e090f-e234-4b5c-a5b5-b778789d9703';
+const RAW_API_URL = import.meta.env.VITE_API_URL || 'https://church-registration-form.onrender.com';
+const API_URL = RAW_API_URL.trim().replace(/\/+$/, '');
+export const EVENT_ID = (import.meta.env.VITE_EVENT_ID || 'd56e090f-e234-4b5c-a5b5-b778789d9703').trim();
 
 // ─── Auth Token ──────────────────────────────────────────
 const TOKEN_KEY = 'admin_token';
