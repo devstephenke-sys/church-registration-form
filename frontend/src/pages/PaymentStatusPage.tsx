@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { initiateSTKPush, getRegistrationStatus } from '../services/api';
+
+const PASTOR_IMAGE = 'https://res.cloudinary.com/dk8xhb82p/image/upload/v1784367257/images_bxlnct.jpg';
 
 type Step = 'initiating' | 'prompt_sent' | 'waiting' | 'done' | 'failed';
 
@@ -8,7 +10,7 @@ export default function PaymentStatusPage() {
   const { registrationId } = useParams<{ registrationId: string }>();
   const navigate = useNavigate();
   const [step, setStep] = useState<Step>('initiating');
-  const [message, setMessage] = useState('Sending payment request to M-PESA...');
+  const [message, setMessage] = useState('Connecting to Safaricom Daraja API...');
   const [error, setError] = useState('');
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const attemptedRef = useRef(false);
@@ -23,13 +25,13 @@ export default function PaymentStatusPage() {
   async function startPaymentFlow() {
     try {
       setStep('initiating');
-      setMessage('Sending payment request to M-PESA...');
+      setMessage('Sending M-PESA STK Push prompt to your phone...');
       const res = await initiateSTKPush(registrationId!);
       setStep('prompt_sent');
-      setMessage(res.customer_message || 'Check your phone for the M-PESA prompt.');
+      setMessage(res.customer_message || 'Please check your phone and enter your M-PESA PIN.');
       setTimeout(() => {
         setStep('waiting');
-        setMessage('Waiting for payment confirmation...');
+        setMessage('Verifying payment confirmation from Safaricom...');
         startPolling();
       }, 2500);
     } catch (err: any) {
@@ -57,7 +59,7 @@ export default function PaymentStatusPage() {
         } else if (attempts >= maxAttempts) {
           stopPolling();
           setStep('failed');
-          setError('Payment confirmation timed out. If you already completed payment on your phone, please wait a minute and refresh.');
+          setError('Payment confirmation timed out. If you completed payment, please refresh or contact support.');
         }
       } catch {
         // Continue polling on transient errors
@@ -83,88 +85,134 @@ export default function PaymentStatusPage() {
     { id: 'initiating', label: 'Sending payment request to M-PESA' },
     { id: 'prompt_sent', label: 'Enter your M-PESA PIN on your phone' },
     { id: 'waiting', label: 'Verifying payment with Safaricom' },
-    { id: 'done', label: 'Payment confirmed & QR generated' },
+    { id: 'done', label: 'Payment confirmed & Delegate QR generated' },
   ];
 
   const currentIdx = steps.findIndex(s => s.id === step);
 
   return (
-    <div className="payment-status-page">
-      <div style={{ width: '100%', maxWidth: 480 }}>
-        <div className="card">
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+    <div className="payment-status-page" style={{ padding: '2.5rem 1rem' }}>
+      <div style={{ width: '100%', maxWidth: 500 }}>
+        {/* Event / Minister Header */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.85rem',
+            marginBottom: '1.5rem',
+            textAlign: 'center',
+          }}
+        >
+          <img
+            src={PASTOR_IMAGE}
+            alt="Apostle Johnson Suleman"
+            style={{
+              width: 48,
+              height: 48,
+              borderRadius: '50%',
+              objectFit: 'cover',
+              border: '2px solid var(--color-primary)',
+              boxShadow: '0 0 12px var(--color-primary-glow)',
+            }}
+          />
+          <div style={{ textAlign: 'left' }}>
+            <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#fff' }}>Kisumu Outpouring 2026</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--color-primary)' }}>Apostle Johnson Suleman · Pastoral Delegation</div>
+          </div>
+        </div>
+
+        <div className="card" style={{ border: '1.5px solid var(--color-border)', boxShadow: 'var(--shadow-lg)' }}>
+          <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
             {step === 'failed' ? (
-              <div className="payment-icon">❌</div>
+              <div style={{ fontSize: '3.5rem', lineHeight: 1, marginBottom: '0.5rem' }}>❌</div>
             ) : step === 'done' ? (
-              <div className="payment-icon">✅</div>
+              <div style={{ fontSize: '3.5rem', lineHeight: 1, marginBottom: '0.5rem' }}>✅</div>
             ) : (
-              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.25rem' }}>
-                <span className="spinner spinner-lg" />
+              <div style={{ position: 'relative', width: 68, height: 68, margin: '0 auto 1rem' }}>
+                <span className="spinner spinner-lg" style={{ width: 68, height: 68, borderWidth: 4, borderColor: 'var(--color-primary) transparent transparent transparent' }} />
+                <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: '1.5rem' }}>📱</span>
               </div>
             )}
 
-            <h2 style={{ fontSize: 'var(--font-size-xl)', fontWeight: 700, marginBottom: '0.5rem' }}>
-              {step === 'failed' ? 'Payment Failed' : step === 'done' ? 'Payment Confirmed!' : 'M-PESA STK Push'}
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>
+              {step === 'failed' ? 'Payment Unsuccessful' : step === 'done' ? 'Payment Confirmed!' : 'M-PESA STK Push'}
             </h2>
-
-            {step !== 'failed' && (
-              <p style={{ color: 'var(--color-text-secondary)', fontSize: 'var(--font-size-sm)' }}>
-                {message}
-              </p>
-            )}
+            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.875rem' }}>{message}</p>
           </div>
 
-          {/* Progress Steps */}
-          {step !== 'failed' && (
-            <div style={{ marginBottom: '1.5rem' }}>
-              {steps.map((s, idx) => {
-                const isDone = idx < currentIdx;
-                const isActive = s.id === step;
-                return (
+          {error && (
+            <div className="alert alert-danger" style={{ marginBottom: '1.5rem' }}>
+              ⚠️ {error}
+            </div>
+          )}
+
+          {/* Stepper Progress */}
+          <div style={{ marginBottom: '2rem' }}>
+            {steps.map((s, idx) => {
+              const isDone = step === 'done' || (currentIdx > idx && step !== 'failed');
+              const isActive = s.id === step && step !== 'failed';
+              return (
+                <div
+                  key={s.id}
+                  className={`payment-step ${isDone ? 'done' : ''} ${isActive ? 'active' : ''}`}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.65rem 0', borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+                >
                   <div
-                    key={s.id}
-                    className={`payment-step ${isActive ? 'active' : ''} ${isDone ? 'done' : ''}`}
+                    style={{
+                      width: 22,
+                      height: 22,
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.7rem',
+                      fontWeight: 800,
+                      background: isDone ? 'var(--color-success)' : isActive ? 'var(--color-primary)' : 'rgba(255,255,255,0.1)',
+                      color: isDone || isActive ? '#020617' : 'var(--color-text-muted)',
+                      flexShrink: 0,
+                    }}
                   >
-                    <span className="step-dot" />
-                    <span style={{ fontSize: 'var(--font-size-sm)' }}>
-                      {isDone ? '✓ ' : ''}{s.label}
-                    </span>
+                    {isDone ? '✓' : idx + 1}
                   </div>
-                );
-              })}
-            </div>
-          )}
+                  <span style={{ fontSize: '0.85rem', fontWeight: isActive ? 700 : 400, color: isActive ? 'var(--color-primary)' : isDone ? 'var(--color-success)' : 'var(--color-text-secondary)' }}>
+                    {s.label}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
 
-          {/* Error State */}
-          {step === 'failed' && (
-            <div>
-              <div className="alert alert-danger" style={{ marginBottom: '1.5rem' }}>
-                {error || 'Payment could not be completed.'}
-              </div>
-              <button
-                id="retry-payment"
-                className="btn btn-primary btn-full"
-                onClick={handleRetry}
-              >
-                🔄 Retry M-PESA STK Push
-              </button>
-              <button
-                className="btn btn-secondary btn-full"
-                style={{ marginTop: '0.75rem' }}
-                onClick={() => navigate('/payment-failed')}
-              >
-                Cancel
-              </button>
+          {/* Paybill Instructions Box */}
+          <div
+            style={{
+              background: 'rgba(2, 6, 23, 0.85)',
+              border: '1px dashed var(--color-border)',
+              borderRadius: 'var(--radius-md)',
+              padding: '1rem',
+              fontSize: '0.8rem',
+              marginBottom: '1.5rem',
+            }}
+          >
+            <div style={{ fontWeight: 700, color: 'var(--color-primary)', marginBottom: '0.35rem' }}>
+              💡 Didn't receive the prompt?
             </div>
-          )}
+            <div style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+              You can also pay manually via M-PESA:
+              <br />
+              <strong>Paybill:</strong> 9410300 · <strong>Amount:</strong> KSh 1,000
+            </div>
+          </div>
 
-          {/* Instructions box */}
-          {(step === 'prompt_sent' || step === 'waiting') && (
-            <div className="card card-sm" style={{ background: 'var(--color-bg-primary)', marginTop: '1rem' }}>
-              <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)', lineHeight: 1.7 }}>
-                💡 <strong>Important:</strong> A popup from <strong>M-PESA (Paybill 9410300)</strong> has been sent to your phone.
-                Please enter your PIN. Do not navigate away from this screen; verification is automatic.
-              </p>
+          {step === 'failed' ? (
+            <button className="btn btn-primary btn-full" onClick={handleRetry}>
+              🔄 Retry Payment (KSh 1,000)
+            </button>
+          ) : (
+            <div style={{ textAlign: 'center' }}>
+              <Link to="/register" style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                Cancel and return to form
+              </Link>
             </div>
           )}
         </div>

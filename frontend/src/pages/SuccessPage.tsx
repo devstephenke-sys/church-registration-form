@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getRegistrationDetails } from '../services/api';
 
+const PASTOR_IMAGE = 'https://res.cloudinary.com/dk8xhb82p/image/upload/v1784367257/images_bxlnct.jpg';
+
 interface Details {
   registration: {
     full_name: string;
     email: string;
     phone: string;
     organization?: string;
+    church_ministry?: string;
+    ministry_location?: string;
+    years_in_ministry?: string;
     registration_number?: string;
     status: string;
   };
@@ -41,7 +46,7 @@ export default function SuccessPage() {
   if (error || !details) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-        <div className="card" style={{ maxWidth: 480, textAlign: 'center' }}>
+        <div className="card" style={{ maxWidth: 480, textAlign: 'center', border: '1.5px solid var(--color-border)' }}>
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>😕</div>
           <h2>Could not load details</h2>
           <p style={{ color: 'var(--color-text-muted)', marginTop: '0.5rem' }}>{error}</p>
@@ -53,94 +58,172 @@ export default function SuccessPage() {
 
   const { registration: reg, payment, qr_code_base64 } = details;
   const paidAt = payment?.paid_at
-    ? new Date(payment.paid_at).toLocaleDateString('en-KE', { dateStyle: 'long' })
+    ? new Date(payment.paid_at).toLocaleDateString('en-KE', { dateStyle: 'long', timeStyle: 'short' })
     : 'Confirmed';
 
   return (
-    <div style={{ minHeight: '100vh', padding: '3rem 0' }}>
+    <div style={{ minHeight: '100vh', padding: '2.5rem 0 4rem' }}>
       <div className="container-narrow">
-        {/* Success Header */}
-        <div className="card" style={{ textAlign: 'center', marginBottom: '1.5rem', background: 'linear-gradient(135deg, rgba(16,185,129,0.12), rgba(0,209,178,0.08))', borderColor: 'rgba(16,185,129,0.25)' }}>
-          <div style={{ fontSize: '4rem', marginBottom: '0.75rem' }}>🎉</div>
-          <h1 style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 800, color: 'var(--color-success)', marginBottom: '0.5rem' }}>
-            Registration Confirmed!
-          </h1>
-          <p style={{ color: 'var(--color-text-secondary)' }}>
-            Welcome, <strong style={{ color: 'var(--color-text-primary)' }}>{reg.full_name}</strong>! Your spot is secured.
-          </p>
-        </div>
-
-        {/* Registration Details */}
-        <div className="card" style={{ marginBottom: '1.5rem' }}>
-          <h3 style={{ fontWeight: 700, marginBottom: '1rem', fontSize: 'var(--font-size-lg)' }}>📋 Registration Details</h3>
-          {[
-            { label: 'Registration Number', value: reg.registration_number, highlight: true },
-            { label: 'Name', value: reg.full_name },
-            { label: 'Email', value: reg.email },
-            { label: 'Phone', value: reg.phone },
-            ...(reg.organization ? [{ label: 'Organization', value: reg.organization }] : []),
-          ].map(row => (
-            <div className="detail-row" key={row.label}>
-              <span className="detail-label">{row.label}</span>
-              <span className="detail-value" style={row.highlight ? { color: 'var(--color-primary)', fontFamily: 'monospace', fontSize: '1rem' } : {}}>
-                {row.value}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Payment Details */}
-        {payment && (
-          <div className="card" style={{ marginBottom: '1.5rem' }}>
-            <h3 style={{ fontWeight: 700, marginBottom: '1rem', fontSize: 'var(--font-size-lg)' }}>💳 Payment Details</h3>
-            {[
-              { label: 'Amount', value: `KSh ${Number(payment.amount).toLocaleString()}` },
-              { label: 'M-PESA Receipt', value: payment.mpesa_receipt || '—' },
-              { label: 'Payment Date', value: paidAt },
-              { label: 'Status', value: 'PAID ✓' },
-            ].map(row => (
-              <div className="detail-row" key={row.label}>
-                <span className="detail-label">{row.label}</span>
-                <span className="detail-value" style={row.label === 'Status' ? { color: 'var(--color-success)' } : {}}>
-                  {row.value}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* QR Code */}
-        {qr_code_base64 && (
-          <div className="card" style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-            <h3 style={{ fontWeight: 700, marginBottom: '0.5rem', fontSize: 'var(--font-size-lg)' }}>
-              📱 Your Check-in QR Code
-            </h3>
-            <p style={{ color: 'var(--color-text-muted)', fontSize: 'var(--font-size-sm)', marginBottom: '1.5rem' }}>
-              Present this at the event entrance. A copy has been sent to your email.
-            </p>
-            <img
-              src={qr_code_base64}
-              alt="QR Code for event check-in"
-              style={{ width: 220, height: 220, border: '2px solid var(--color-border)', borderRadius: 12, margin: '0 auto', display: 'block' }}
-            />
-            <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)', marginTop: '1rem' }}>
-              Screenshot or save this QR code to your phone
-            </p>
-          </div>
-        )}
-
-        {/* Actions */}
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
-          <Link to="/" className="btn btn-secondary" style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-            Back to Home
+        {/* Navigation */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+          <Link to="/" style={{ color: 'var(--color-text-muted)', fontSize: 'var(--font-size-sm)' }}>
+            ← Back to Home
           </Link>
-          <button className="btn btn-primary" style={{ flex: 1 }} onClick={() => window.print()}>
-            🖨️ Print Receipt
+          <button className="btn btn-secondary btn-sm" onClick={() => window.print()}>
+            🖨️ Print Pass / Badge
           </button>
         </div>
 
-        <p style={{ textAlign: 'center', color: 'var(--color-text-muted)', fontSize: 'var(--font-size-sm)', marginTop: '1.5rem' }}>
-          A confirmation email with your QR code has been sent to <strong>{reg.email}</strong>
+        {/* ─── VIP Delegate Pass Card ─── */}
+        <div
+          className="card"
+          style={{
+            border: '2px solid var(--color-primary)',
+            boxShadow: 'var(--shadow-glow-primary)',
+            background: 'linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(2, 6, 23, 0.98) 100%)',
+            padding: '2rem',
+            position: 'relative',
+            overflow: 'hidden',
+            marginBottom: '1.75rem',
+          }}
+        >
+          {/* Top Decorative Gold Bar */}
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: 'linear-gradient(90deg, #f59e0b, #fbbf24, #d97706)' }} />
+
+          {/* Event & Host Badge */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', paddingBottom: '1.5rem', borderBottom: '1px dashed var(--color-border)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <img
+                src={PASTOR_IMAGE}
+                alt="Apostle Johnson Suleman"
+                style={{
+                  width: 58,
+                  height: 58,
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: '2.5px solid var(--color-primary)',
+                  boxShadow: '0 0 14px var(--color-primary-glow)',
+                }}
+              />
+              <div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--color-primary)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                  Apostle Johnson Suleman
+                </div>
+                <div style={{ fontWeight: 800, fontSize: '1.1rem', color: '#fff' }}>
+                  Kisumu Kenya Outpouring 2026
+                </div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                  Official Pastoral & Ministerial Pass
+                </div>
+              </div>
+            </div>
+            <span className="badge badge-success" style={{ padding: '6px 14px', fontSize: '0.8rem' }}>
+              ✓ ACCREDITED DELEGATE
+            </span>
+          </div>
+
+          {/* Delegate Name & Pass Code */}
+          <div style={{ padding: '1.5rem 0', textAlign: 'center' }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.35rem' }}>
+              Delegate Name & Title
+            </div>
+            <h2 style={{ fontSize: '1.65rem', fontWeight: 800, color: '#fff', marginBottom: '0.35rem' }}>
+              {reg.full_name}
+            </h2>
+            <p style={{ color: 'var(--color-primary)', fontWeight: 600, fontSize: '0.95rem', margin: 0 }}>
+              {reg.organization || reg.church_ministry || 'Pastoral Delegate'}
+            </p>
+            {reg.registration_number && (
+              <div
+                style={{
+                  display: 'inline-block',
+                  margin: '1rem auto 0',
+                  padding: '0.35rem 1rem',
+                  background: 'rgba(245, 158, 11, 0.1)',
+                  border: '1px solid var(--color-primary)',
+                  borderRadius: 'var(--radius-full)',
+                  fontFamily: 'monospace',
+                  fontWeight: 800,
+                  fontSize: '0.95rem',
+                  color: 'var(--color-primary)',
+                }}
+              >
+                PASS ID: {reg.registration_number}
+              </div>
+            )}
+          </div>
+
+          {/* QR Code Section */}
+          {qr_code_base64 && (
+            <div
+              style={{
+                background: '#fff',
+                padding: '1.25rem',
+                borderRadius: 'var(--radius-md)',
+                maxWidth: 240,
+                margin: '0 auto 1.5rem',
+                textAlign: 'center',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+              }}
+            >
+              <img
+                src={qr_code_base64}
+                alt="Delegate QR Code"
+                style={{ width: '100%', height: 'auto', display: 'block', margin: '0 auto' }}
+              />
+              <div style={{ fontSize: '0.7rem', color: '#020617', fontWeight: 800, marginTop: '0.5rem', letterSpacing: '0.04em' }}>
+                OFFICIAL ENTRY QR PASS
+              </div>
+            </div>
+          )}
+
+          {/* Delegate Credentials Table */}
+          <div style={{ background: 'rgba(2, 6, 23, 0.6)', borderRadius: 'var(--radius-md)', padding: '1rem 1.25rem', fontSize: '0.85rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+              <div>
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>Email:</span>
+                <div style={{ color: '#fff', fontWeight: 600 }}>{reg.email}</div>
+              </div>
+              <div>
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>Phone:</span>
+                <div style={{ color: '#fff', fontWeight: 600 }}>{reg.phone}</div>
+              </div>
+              {payment?.mpesa_receipt && (
+                <div>
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>M-PESA Receipt:</span>
+                  <div style={{ color: 'var(--color-success)', fontWeight: 700, fontFamily: 'monospace' }}>
+                    {payment.mpesa_receipt}
+                  </div>
+                </div>
+              )}
+              {payment?.amount && (
+                <div>
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>Amount Paid:</span>
+                  <div style={{ color: 'var(--color-primary)', fontWeight: 800 }}>
+                    KSh {Number(payment.amount).toLocaleString()}
+                  </div>
+                </div>
+              )}
+              <div>
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>Payment Date:</span>
+                <div style={{ color: '#fff', fontWeight: 600 }}>{paidAt}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+          <button className="btn btn-primary" style={{ flex: 1 }} onClick={() => window.print()}>
+            🖨️ Download / Print Official Pass
+          </button>
+          <Link to="/" className="btn btn-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            Back to Home
+          </Link>
+        </div>
+
+        <p style={{ textAlign: 'center', color: 'var(--color-text-muted)', fontSize: '0.8rem', marginTop: '1.75rem' }}>
+          A digital copy of this ministerial pass & QR ticket has been delivered to <strong>{reg.email}</strong>.
         </p>
       </div>
     </div>

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { createRegistration, EVENT_ID } from '../services/api';
 
+const PASTOR_IMAGE = 'https://res.cloudinary.com/dk8xhb82p/image/upload/v1784367257/images_bxlnct.jpg';
+
 interface FormData {
   full_name: string;
   email: string;
@@ -35,11 +37,11 @@ const YEARS_OPTIONS = [
 ];
 
 const REFERRAL_OPTIONS = [
-  'Social Media',
-  'Church Announcement',
-  'Word of Mouth',
-  'Official Website',
-  'Radio or Television',
+  'Social Media (Facebook / YouTube / TikTok)',
+  'Church Announcement / Invitation',
+  'Fellow Minister / Word of Mouth',
+  'Official Crusade Website',
+  'Radio / Television Broadcast',
 ];
 
 export default function RegisterPage() {
@@ -76,7 +78,7 @@ export default function RegisterPage() {
       errs.church_ministry = 'Name of Church or Ministry is required';
     }
     if (!form.ministry_location.trim()) {
-      errs.ministry_location = 'Location of Ministry (City/Region) is required';
+      errs.ministry_location = 'Location of Ministry (City/Town) is required';
     }
     if (!form.years_in_ministry) {
       errs.years_in_ministry = 'Please select your years in ministry';
@@ -133,249 +135,319 @@ export default function RegisterPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', padding: '2.5rem 0' }}>
+    <div style={{ minHeight: '100vh', padding: '2rem 0 3.5rem' }}>
       <div className="container-narrow">
-        {/* Back Link */}
-        <Link
-          to="/"
-          style={{
-            color: 'var(--color-text-muted)',
-            fontSize: 'var(--font-size-sm)',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.25rem',
-            marginBottom: '1.5rem',
-          }}
-        >
-          ← Back to Event Overview
-        </Link>
+        {/* Navigation Breadcrumb */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+          <Link
+            to="/"
+            style={{
+              color: 'var(--color-text-muted)',
+              fontSize: 'var(--font-size-sm)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              transition: 'var(--transition-fast)',
+            }}
+          >
+            ← Back to Overview
+          </Link>
+          <span className="badge badge-warning" style={{ padding: '3px 10px' }}>
+            Fee: KSh 1,000
+          </span>
+        </div>
 
-        <div className="card">
-          {/* Header Banner */}
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <div style={{ fontSize: '2.75rem', marginBottom: '0.5rem' }}>🕊️</div>
-            <h1 style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 800, lineHeight: 1.25, marginBottom: '0.5rem' }}>
-              Registration Form: Pastoral Delegation
-            </h1>
-            <p style={{ color: 'var(--color-primary)', fontWeight: 600, fontSize: 'var(--font-size-base)', marginBottom: '0.5rem' }}>
-              Apostle Johnson Suleman Crusade
-            </p>
-            <p style={{ color: 'var(--color-text-secondary)', fontSize: 'var(--font-size-sm)', maxWidth: 540, margin: '0 auto' }}>
-              This form is for pastors and ministers wishing to register their attendance and participation for the upcoming crusade event.
-            </p>
+        {/* Main Card */}
+        <div className="card" style={{ border: '1.5px solid var(--color-border)', boxShadow: 'var(--shadow-lg)' }}>
+          {/* Minister Header Banner */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1.25rem',
+              paddingBottom: '1.5rem',
+              marginBottom: '1.75rem',
+              borderBottom: '1px solid var(--color-border)',
+            }}
+          >
+            <img
+              src={PASTOR_IMAGE}
+              alt="Apostle Johnson Suleman"
+              style={{
+                width: 72,
+                height: 72,
+                borderRadius: '50%',
+                objectFit: 'cover',
+                border: '3px solid var(--color-primary)',
+                boxShadow: '0 0 16px var(--color-primary-glow)',
+                flexShrink: 0,
+              }}
+            />
+            <div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--color-primary)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                Official Delegation Portal
+              </div>
+              <h1 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#fff', lineHeight: 1.25, margin: '0.15rem 0 0.25rem' }}>
+                Pastoral Delegation Registration
+              </h1>
+              <p style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', margin: 0 }}>
+                Kisumu Kenya Outpouring 2026 · Host: <strong>Apostle Johnson Suleman</strong>
+              </p>
+            </div>
           </div>
 
           {apiError && (
-            <div className="alert alert-danger" style={{ marginBottom: '1.5rem' }}>
+            <div className="alert alert-danger" style={{ marginBottom: '1.5rem', borderRadius: 'var(--radius-md)' }}>
               ⚠️ {apiError}
             </div>
           )}
 
           <form onSubmit={handleSubmit}>
-            {/* Full Name */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="full_name">
-                Full Name <span className="required">*</span>
-              </label>
-              <input
-                id="full_name"
-                name="full_name"
-                type="text"
-                className={`form-control ${errors.full_name ? 'error' : ''}`}
-                placeholder="e.g. Pastor John Mwangi"
-                value={form.full_name}
-                onChange={handleChange}
-                autoComplete="name"
-              />
-              {errors.full_name && <div className="form-error">⚠ {errors.full_name}</div>}
-            </div>
-
-            {/* Email Address */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="email">
-                Email Address <span className="required">*</span>
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                className={`form-control ${errors.email ? 'error' : ''}`}
-                placeholder="pastor@church.org"
-                value={form.email}
-                onChange={handleChange}
-                autoComplete="email"
-              />
-              {errors.email && <div className="form-error">⚠ {errors.email}</div>}
-            </div>
-
-            {/* Phone Number */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="phone">
-                Phone Number (M-PESA) <span className="required">*</span>
-              </label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                className={`form-control ${errors.phone ? 'error' : ''}`}
-                placeholder="0712 345 678"
-                value={form.phone}
-                onChange={handleChange}
-                autoComplete="tel"
-              />
-              {errors.phone && <div className="form-error">⚠ {errors.phone}</div>}
-              <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)', marginTop: '0.25rem' }}>
-                M-PESA payment prompt (KSh 1,000) will be sent to this number.
-              </p>
-            </div>
-
-            {/* Name of Church or Ministry */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="church_ministry">
-                Name of Church or Ministry <span className="required">*</span>
-              </label>
-              <input
-                id="church_ministry"
-                name="church_ministry"
-                type="text"
-                className={`form-control ${errors.church_ministry ? 'error' : ''}`}
-                placeholder="e.g. Grace International Ministry"
-                value={form.church_ministry}
-                onChange={handleChange}
-              />
-              {errors.church_ministry && <div className="form-error">⚠ {errors.church_ministry}</div>}
-            </div>
-
-            {/* Location of Ministry */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="ministry_location">
-                Location of Ministry (City/Region) <span className="required">*</span>
-              </label>
-              <input
-                id="ministry_location"
-                name="ministry_location"
-                type="text"
-                className={`form-control ${errors.ministry_location ? 'error' : ''}`}
-                placeholder="e.g. Nairobi / Westlands"
-                value={form.ministry_location}
-                onChange={handleChange}
-              />
-              {errors.ministry_location && <div className="form-error">⚠ {errors.ministry_location}</div>}
-            </div>
-
-            {/* Years in Ministry */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="years_in_ministry">
-                Years in Ministry <span className="required">*</span>
-              </label>
-              <select
-                id="years_in_ministry"
-                name="years_in_ministry"
-                className={`form-control ${errors.years_in_ministry ? 'error' : ''}`}
-                value={form.years_in_ministry}
-                onChange={handleChange}
-                style={{ cursor: 'pointer' }}
-              >
-                <option value="">Select your years in ministry</option>
-                {YEARS_OPTIONS.map(opt => (
-                  <option key={opt} value={opt}>{opt}</option>
-                ))}
-              </select>
-              {errors.years_in_ministry && <div className="form-error">⚠ {errors.years_in_ministry}</div>}
-            </div>
-
-            {/* Referral Source */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="referral_source">
-                How did you hear about this crusade? <span className="required">*</span>
-              </label>
-              <select
-                id="referral_source"
-                name="referral_source"
-                className={`form-control ${errors.referral_source ? 'error' : ''}`}
-                value={form.referral_source}
-                onChange={handleChange}
-                style={{ cursor: 'pointer' }}
-              >
-                <option value="">Select an option</option>
-                {REFERRAL_OPTIONS.map(opt => (
-                  <option key={opt} value={opt}>{opt}</option>
-                ))}
-              </select>
-              {errors.referral_source && <div className="form-error">⚠ {errors.referral_source}</div>}
-            </div>
-
-            {/* Special Assistance / Accommodation */}
-            <div className="form-group">
-              <label className="form-label">
-                Do you require special assistance or accommodation? <span className="required">*</span>
-              </label>
-              <div style={{ display: 'flex', gap: '1rem', marginTop: '0.25rem', marginBottom: form.special_assistance_needed === 'Yes' ? '0.75rem' : 0 }}>
-                {['No', 'Yes'].map(opt => (
-                  <label
-                    key={opt}
-                    style={{
-                      flex: 1,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '0.5rem',
-                      padding: '0.65rem 1rem',
-                      background: form.special_assistance_needed === opt ? 'var(--color-primary-glow)' : 'var(--color-bg-input)',
-                      border: `1.5px solid ${form.special_assistance_needed === opt ? 'var(--color-primary)' : 'var(--color-border)'}`,
-                      borderRadius: 'var(--radius-md)',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      name="special_assistance_needed"
-                      value={opt}
-                      checked={form.special_assistance_needed === opt}
-                      onChange={handleChange}
-                      style={{ accentColor: 'var(--color-primary)' }}
-                    />
-                    <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600 }}>{opt}</span>
-                  </label>
-                ))}
+            {/* ─── SECTION 1: Personal Details ─── */}
+            <div style={{ marginBottom: '1.75rem' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ background: 'var(--color-primary-glow)', color: 'var(--color-primary)', width: 22, height: 22, borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 800 }}>1</span>
+                Minister's Personal Details
               </div>
 
-              {form.special_assistance_needed === 'Yes' && (
-                <textarea
-                  name="special_assistance_details"
-                  className="form-control"
-                  rows={2}
-                  placeholder="Please specify your accommodation or accessibility requirements..."
-                  value={form.special_assistance_details}
+              {/* Full Name */}
+              <div className="form-group">
+                <label className="form-label" htmlFor="full_name">
+                  Full Name & Title <span className="required">*</span>
+                </label>
+                <input
+                  id="full_name"
+                  name="full_name"
+                  type="text"
+                  className={`form-control ${errors.full_name ? 'error' : ''}`}
+                  placeholder="e.g. Pastor John Mwangi / Bishop Sarah Otieno"
+                  value={form.full_name}
                   onChange={handleChange}
-                  style={{ marginTop: '0.5rem' }}
+                  autoComplete="name"
                 />
-              )}
+                {errors.full_name && <div className="form-error">⚠ {errors.full_name}</div>}
+              </div>
+
+              {/* Form Row: Email & Phone */}
+              <div className="form-row">
+                {/* Email Address */}
+                <div className="form-group">
+                  <label className="form-label" htmlFor="email">
+                    Email Address <span className="required">*</span>
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    className={`form-control ${errors.email ? 'error' : ''}`}
+                    placeholder="pastor@church.org"
+                    value={form.email}
+                    onChange={handleChange}
+                    autoComplete="email"
+                  />
+                  {errors.email && <div className="form-error">⚠ {errors.email}</div>}
+                </div>
+
+                {/* Phone Number */}
+                <div className="form-group">
+                  <label className="form-label" htmlFor="phone">
+                    Phone Number (M-PESA) <span className="required">*</span>
+                  </label>
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    className={`form-control ${errors.phone ? 'error' : ''}`}
+                    placeholder="0712 345 678"
+                    value={form.phone}
+                    onChange={handleChange}
+                    autoComplete="tel"
+                  />
+                  {errors.phone && <div className="form-error">⚠ {errors.phone}</div>}
+                </div>
+              </div>
             </div>
 
-            {/* Payment Summary */}
-            <div className="card card-sm" style={{ background: 'var(--color-bg-primary)', margin: '1.75rem 0 1.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-sm)', marginBottom: '0.5rem' }}>
-                <span style={{ color: 'var(--color-text-muted)' }}>Delegation Registration Fee</span>
-                <span style={{ fontWeight: 800, color: 'var(--color-primary)', fontSize: '1.1rem' }}>KSh 1,000</span>
+            {/* ─── SECTION 2: Ministry Information ─── */}
+            <div style={{ marginBottom: '1.75rem', paddingTop: '1.25rem', borderTop: '1px solid var(--color-border)' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ background: 'var(--color-primary-glow)', color: 'var(--color-primary)', width: 22, height: 22, borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 800 }}>2</span>
+                Ministry & Church Information
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--font-size-sm)' }}>
-                <span style={{ color: 'var(--color-text-muted)' }}>Payment Channel</span>
-                <span style={{ fontWeight: 600 }}>M-PESA Paybill 9410300</span>
+
+              {/* Church/Ministry Name */}
+              <div className="form-group">
+                <label className="form-label" htmlFor="church_ministry">
+                  Name of Church or Ministry <span className="required">*</span>
+                </label>
+                <input
+                  id="church_ministry"
+                  name="church_ministry"
+                  type="text"
+                  className={`form-control ${errors.church_ministry ? 'error' : ''}`}
+                  placeholder="e.g. Glory Deliverance Chapel / Word of Faith Ministry"
+                  value={form.church_ministry}
+                  onChange={handleChange}
+                />
+                {errors.church_ministry && <div className="form-error">⚠ {errors.church_ministry}</div>}
+              </div>
+
+              {/* Form Row: Location & Years */}
+              <div className="form-row">
+                {/* Location */}
+                <div className="form-group">
+                  <label className="form-label" htmlFor="ministry_location">
+                    Location / City <span className="required">*</span>
+                  </label>
+                  <input
+                    id="ministry_location"
+                    name="ministry_location"
+                    type="text"
+                    className={`form-control ${errors.ministry_location ? 'error' : ''}`}
+                    placeholder="e.g. Kisumu / Nairobi / Eldoret"
+                    value={form.ministry_location}
+                    onChange={handleChange}
+                  />
+                  {errors.ministry_location && <div className="form-error">⚠ {errors.ministry_location}</div>}
+                </div>
+
+                {/* Years in Ministry */}
+                <div className="form-group">
+                  <label className="form-label" htmlFor="years_in_ministry">
+                    Years in Ministry <span className="required">*</span>
+                  </label>
+                  <select
+                    id="years_in_ministry"
+                    name="years_in_ministry"
+                    className={`form-control ${errors.years_in_ministry ? 'error' : ''}`}
+                    value={form.years_in_ministry}
+                    onChange={handleChange}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <option value="">Select experience</option>
+                    {YEARS_OPTIONS.map(opt => (
+                      <option key={opt} value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                  {errors.years_in_ministry && <div className="form-error">⚠ {errors.years_in_ministry}</div>}
+                </div>
               </div>
             </div>
 
-            {/* Submit */}
+            {/* ─── SECTION 3: Additional Protocol ─── */}
+            <div style={{ marginBottom: '1.75rem', paddingTop: '1.25rem', borderTop: '1px solid var(--color-border)' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ background: 'var(--color-primary-glow)', color: 'var(--color-primary)', width: 22, height: 22, borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 800 }}>3</span>
+                Protocol & Accommodation
+              </div>
+
+              {/* Referral Source */}
+              <div className="form-group">
+                <label className="form-label" htmlFor="referral_source">
+                  How did you hear about this crusade? <span className="required">*</span>
+                </label>
+                <select
+                  id="referral_source"
+                  name="referral_source"
+                  className={`form-control ${errors.referral_source ? 'error' : ''}`}
+                  value={form.referral_source}
+                  onChange={handleChange}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <option value="">Select an option</option>
+                  {REFERRAL_OPTIONS.map(opt => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                </select>
+                {errors.referral_source && <div className="form-error">⚠ {errors.referral_source}</div>}
+              </div>
+
+              {/* Special Assistance */}
+              <div className="form-group">
+                <label className="form-label">
+                  Do you require special assistance or accessibility accommodation? <span className="required">*</span>
+                </label>
+                <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.25rem', marginBottom: form.special_assistance_needed === 'Yes' ? '0.75rem' : 0 }}>
+                  {['No', 'Yes'].map(opt => (
+                    <label
+                      key={opt}
+                      style={{
+                        flex: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '0.5rem',
+                        padding: '0.65rem 1rem',
+                        background: form.special_assistance_needed === opt ? 'var(--color-primary-glow)' : 'var(--color-bg-input)',
+                        border: `1.5px solid ${form.special_assistance_needed === opt ? 'var(--color-primary)' : 'var(--color-border)'}`,
+                        borderRadius: 'var(--radius-md)',
+                        cursor: 'pointer',
+                        transition: 'var(--transition-fast)',
+                      }}
+                    >
+                      <input
+                        type="radio"
+                        name="special_assistance_needed"
+                        value={opt}
+                        checked={form.special_assistance_needed === opt}
+                        onChange={handleChange}
+                        style={{ accentColor: 'var(--color-primary)' }}
+                      />
+                      <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600 }}>{opt}</span>
+                    </label>
+                  ))}
+                </div>
+
+                {form.special_assistance_needed === 'Yes' && (
+                  <textarea
+                    name="special_assistance_details"
+                    className="form-control"
+                    rows={2}
+                    placeholder="Please specify your accessibility or accommodation needs..."
+                    value={form.special_assistance_details}
+                    onChange={handleChange}
+                    style={{ marginTop: '0.5rem' }}
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* ─── Payment Summary Card ─── */}
+            <div
+              className="card card-sm"
+              style={{
+                background: 'rgba(2, 6, 23, 0.95)',
+                border: '1.5px solid var(--color-border)',
+                margin: '1.5rem 0',
+                borderRadius: 'var(--radius-md)',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem' }}>
+                  Pastoral Delegation Registration Fee
+                </span>
+                <span style={{ fontWeight: 800, color: 'var(--color-primary)', fontSize: '1.2rem' }}>
+                  KSh 1,000
+                </span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                <span>Payment Channel</span>
+                <span style={{ fontWeight: 600, color: '#fff' }}>M-PESA Paybill 9410300</span>
+              </div>
+            </div>
+
+            {/* Submit Button */}
             <button
               id="submit-register"
               type="submit"
               className="btn btn-primary btn-full btn-lg"
               disabled={loading}
+              style={{ fontSize: '1.05rem', fontWeight: 700, letterSpacing: '0.02em' }}
             >
               {loading ? (
-                <><span className="spinner" style={{ width: 18, height: 18 }} /> Submitting Registration...</>
+                <><span className="spinner" style={{ width: 20, height: 20 }} /> Processing Registration...</>
               ) : (
-                '🕊️ Complete & Pay KSh 1,000 via M-PESA'
+                '🕊️ Proceed to M-PESA Payment (KSh 1,000)'
               )}
             </button>
           </form>
