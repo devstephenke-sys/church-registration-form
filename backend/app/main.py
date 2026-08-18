@@ -23,18 +23,12 @@ app = FastAPI(
 )
 
 # CORS Middleware setup
-origins = [
-    settings.FRONTEND_URL,
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "https://localhost:5173",
-    "https://*.vercel.app"
-]
-
+# Using allow_origins=["*"] because Starlette does not support wildcard subdomains.
+# Security is enforced via JWT on all admin routes and Safaricom callback signatures.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
