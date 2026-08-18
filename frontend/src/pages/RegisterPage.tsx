@@ -9,7 +9,6 @@ interface FormData {
   church_ministry: string;
   ministry_location: string;
   years_in_ministry: string;
-  sessions_attending: string[];
   referral_source: string;
   special_assistance_needed: string;
   special_assistance_details: string;
@@ -22,7 +21,6 @@ interface FormErrors {
   church_ministry?: string;
   ministry_location?: string;
   years_in_ministry?: string;
-  sessions_attending?: string;
   referral_source?: string;
   special_assistance?: string;
 }
@@ -34,13 +32,6 @@ const YEARS_OPTIONS = [
   '8-12 years',
   '13-20 years',
   'More than 20 years',
-];
-
-const SESSION_OPTIONS = [
-  'Morning Leadership Session',
-  'Evening Main Crusade Session',
-  'Pastoral Fellowship Luncheon',
-  "Minister's Impartation Service",
 ];
 
 const REFERRAL_OPTIONS = [
@@ -60,7 +51,6 @@ export default function RegisterPage() {
     church_ministry: '',
     ministry_location: '',
     years_in_ministry: '',
-    sessions_attending: [],
     referral_source: '',
     special_assistance_needed: 'No',
     special_assistance_details: '',
@@ -91,9 +81,6 @@ export default function RegisterPage() {
     if (!form.years_in_ministry) {
       errs.years_in_ministry = 'Please select your years in ministry';
     }
-    if (form.sessions_attending.length === 0) {
-      errs.sessions_attending = 'Please select at least one session to attend';
-    }
     if (!form.referral_source) {
       errs.referral_source = 'Please select how you heard about this crusade';
     }
@@ -103,19 +90,6 @@ export default function RegisterPage() {
 
     setErrors(errs);
     return Object.keys(errs).length === 0;
-  }
-
-  function toggleSession(session: string) {
-    setForm(prev => {
-      const exists = prev.sessions_attending.includes(session);
-      const updated = exists
-        ? prev.sessions_attending.filter(s => s !== session)
-        : [...prev.sessions_attending, session];
-      return { ...prev, sessions_attending: updated };
-    });
-    if (errors.sessions_attending) {
-      setErrors(prev => ({ ...prev, sessions_attending: undefined }));
-    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -138,7 +112,6 @@ export default function RegisterPage() {
         church_ministry: form.church_ministry.trim(),
         ministry_location: form.ministry_location.trim(),
         years_in_ministry: form.years_in_ministry,
-        sessions_attending: form.sessions_attending,
         referral_source: form.referral_source,
         special_assistance: assistance,
       });
@@ -309,45 +282,6 @@ export default function RegisterPage() {
                 ))}
               </select>
               {errors.years_in_ministry && <div className="form-error">⚠ {errors.years_in_ministry}</div>}
-            </div>
-
-            {/* Sessions Intending to Attend */}
-            <div className="form-group">
-              <label className="form-label">
-                Which session(s) do you intend to attend? <span className="required">*</span>
-              </label>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginTop: '0.25rem' }}>
-                {SESSION_OPTIONS.map(session => {
-                  const checked = form.sessions_attending.includes(session);
-                  return (
-                    <label
-                      key={session}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.75rem',
-                        padding: '0.75rem 1rem',
-                        background: checked ? 'var(--color-primary-glow)' : 'var(--color-bg-input)',
-                        border: `1.5px solid ${checked ? 'var(--color-primary)' : 'var(--color-border)'}`,
-                        borderRadius: 'var(--radius-md)',
-                        cursor: 'pointer',
-                        transition: 'var(--transition-fast)',
-                      }}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={checked}
-                        onChange={() => toggleSession(session)}
-                        style={{ width: 18, height: 18, accentColor: 'var(--color-primary)', cursor: 'pointer' }}
-                      />
-                      <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: checked ? 600 : 400, color: checked ? 'var(--color-text-primary)' : 'var(--color-text-secondary)' }}>
-                        {session}
-                      </span>
-                    </label>
-                  );
-                })}
-              </div>
-              {errors.sessions_attending && <div className="form-error" style={{ marginTop: '0.4rem' }}>⚠ {errors.sessions_attending}</div>}
             </div>
 
             {/* Referral Source */}

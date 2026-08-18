@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
-const EVENT_TITLE = 'Apostle Johnson Suleman Crusade';
-const EVENT_SUBTITLE = 'Pastoral Delegation Registration';
+const EVENT_TITLE = 'Kisumu Kenya Outpouring 2026';
+const EVENT_SUBTITLE = 'Pastoral & Ministerial Delegation Registration';
 
 export default function LandingPage() {
   return (
@@ -10,7 +10,7 @@ export default function LandingPage() {
       <nav className="navbar">
         <div className="container">
           <div className="navbar-inner">
-            <div className="navbar-brand">🕊️ Suleman Crusade 2026</div>
+            <div className="navbar-brand">🕊️ Kisumu Outpouring 2026</div>
             <Link to="/register" className="btn btn-primary btn-sm">
               Pastoral Registration →
             </Link>
@@ -23,31 +23,31 @@ export default function LandingPage() {
         <div className="container">
           <div className="hero-badge">
             <span>🕊️</span>
-            <span>Pastoral & Ministerial Delegation · Nairobi, Kenya</span>
+            <span>Apostle Johnson Suleman · Kisumu, Kenya</span>
           </div>
           <h1 className="hero-title">
             {EVENT_TITLE}<br />
             <span>{EVENT_SUBTITLE}</span>
           </h1>
           <p className="hero-subtitle">
-            Calling all pastors, bishops, apostles, and gospel ministers. Secure your official ministerial
-            badge and delegation seating for this power-packed spiritual encounter.
+            Calling all pastors, bishops, apostles, and gospel ministers. Register your official ministerial
+            delegation, reserve priority pastoral seating, and prepare for a divine impartation of grace.
           </p>
           <div className="hero-cta">
             <Link to="/register" className="btn btn-primary btn-lg">
-              🕊️ Register Delegation · KSh 1,000
+              🕊️ Register Pastoral Delegation · KSh 1,000
             </Link>
-            <a href="#schedule" className="btn btn-secondary btn-lg">
-              View Schedule
+            <a href="#overview" className="btn btn-secondary btn-lg">
+              Event Overview
             </a>
           </div>
 
           {/* Highlights */}
           <div className="stats-grid">
             {[
-              { number: '4', label: 'Spiritual Sessions' },
-              { number: 'Ministers', label: 'Impartation Service' },
-              { number: 'Pastoral', label: 'Fellowship Luncheon' },
+              { number: 'Ministers', label: 'Pastoral Delegation' },
+              { number: 'Priority', label: 'Ministerial Seating' },
+              { number: 'Impartation', label: 'Grace & Anointing' },
               { number: 'KSh 1,000', label: 'Registration Fee' },
             ].map((s) => (
               <div className="stat-card" key={s.label}>
@@ -59,22 +59,22 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Schedule / Highlights */}
-      <section id="schedule" style={{ padding: '4rem 0', borderTop: '1px solid var(--color-border)' }}>
+      {/* Event Overview */}
+      <section id="overview" style={{ padding: '4rem 0', borderTop: '1px solid var(--color-border)' }}>
         <div className="container-narrow">
           <div className="card">
             <h2 style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 700, marginBottom: '1rem', textAlign: 'center' }}>
-              Pastoral Delegation Sessions
+              Pastoral & Ministerial Delegation
             </h2>
             <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: '2rem', textAlign: 'center' }}>
-              Registered delegates receive priority ministerial seating, the special impartation service, and access to all designated sessions.
+              Registered delegates receive priority ministerial seating, the special impartation service with Apostle Johnson Suleman, and official delegation credentials.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
               {[
-                { icon: '🌅', title: 'Morning Leadership Session', desc: 'Strategic ministry insights and pastoral leadership empowerment' },
-                { icon: '🔥', title: 'Evening Main Crusade', desc: 'Mighty signs, wonders, salvation, and kingdom demonstration' },
-                { icon: '🍽️', title: 'Pastoral Fellowship Luncheon', desc: 'Intimate ministerial networking and fellowship' },
-                { icon: '⚡', title: "Minister's Impartation Service", desc: 'Special grace transfer and ministerial anointing' },
+                { icon: '🕊️', title: 'Ministerial Delegation Badge', desc: 'Official accreditation and verified delegate QR pass' },
+                { icon: '👑', title: 'Priority Ministerial Seating', desc: 'Reserved seating section for pastors, bishops, and church leaders' },
+                { icon: '⚡', title: "Minister's Impartation", desc: 'Special grace transfer and ministerial anointing' },
+                { icon: '🤝', title: 'Pastoral Fellowship & Network', desc: 'Connecting ministers across the nation for kingdom advancement' },
               ].map((f) => (
                 <div className="card card-sm" key={f.title} style={{ background: 'var(--color-bg-primary)' }}>
                   <div style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{f.icon}</div>
@@ -106,7 +106,7 @@ export default function LandingPage() {
         fontSize: 'var(--font-size-sm)'
       }}>
         <div className="container">
-          <p>© 2026 Apostle Johnson Suleman Crusade · Pastoral Delegation Committee · <Link to="/admin/login" style={{ color: 'inherit' }}>Admin Portal</Link></p>
+          <p>© 2026 Kisumu Kenya Outpouring · Apostle Johnson Suleman · Pastoral Delegation Committee · <Link to="/admin/login" style={{ color: 'inherit' }}>Admin Portal</Link></p>
         </div>
       </footer>
     </div>

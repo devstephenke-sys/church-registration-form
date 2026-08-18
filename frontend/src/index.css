@@ -4,38 +4,38 @@
    DESIGN SYSTEM TOKENS
 =================================================== */
 :root {
-  /* Colors - Premium Dark Mode Palette */
-  --color-bg-primary: #0a0e1a;
-  --color-bg-secondary: #111827;
-  --color-bg-card: #1a2235;
-  --color-bg-card-hover: #1e2a3d;
-  --color-bg-input: #0f1623;
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-focus: rgba(0, 209, 178, 0.5);
+  /* Colors - Kisumu Outpouring 2026 Gold & Deep Slate Palette */
+  --color-bg-primary: #020617;
+  --color-bg-secondary: #0f172a;
+  --color-bg-card: #0f172a;
+  --color-bg-card-hover: #1e293b;
+  --color-bg-input: #020617;
+  --color-border: rgba(245, 158, 11, 0.18);
+  --color-border-focus: rgba(245, 158, 11, 0.6);
 
-  /* Brand Colors */
-  --color-primary: #00d1b2;
-  --color-primary-dark: #00a896;
-  --color-primary-glow: rgba(0, 209, 178, 0.15);
-  --color-secondary: #3b82f6;
-  --color-secondary-dark: #2563eb;
-  --color-accent: #8b5cf6;
+  /* Brand Colors - Kisumu Outpouring Gold & Amber */
+  --color-primary: #f59e0b;
+  --color-primary-dark: #d97706;
+  --color-primary-glow: rgba(245, 158, 11, 0.18);
+  --color-secondary: #fbbf24;
+  --color-secondary-dark: #b45309;
+  --color-accent: #10b981;
 
   /* Status Colors */
   --color-success: #10b981;
-  --color-success-bg: rgba(16, 185, 129, 0.1);
+  --color-success-bg: rgba(16, 185, 129, 0.12);
   --color-warning: #f59e0b;
-  --color-warning-bg: rgba(245, 158, 11, 0.1);
+  --color-warning-bg: rgba(245, 158, 11, 0.12);
   --color-danger: #ef4444;
-  --color-danger-bg: rgba(239, 68, 68, 0.1);
-  --color-info: #3b82f6;
-  --color-info-bg: rgba(59, 130, 246, 0.1);
+  --color-danger-bg: rgba(239, 68, 68, 0.12);
+  --color-info: #38bdf8;
+  --color-info-bg: rgba(56, 189, 248, 0.12);
 
   /* Text Colors */
-  --color-text-primary: #f1f5f9;
-  --color-text-secondary: #94a3b8;
-  --color-text-muted: #64748b;
-  --color-text-inverted: #0a0e1a;
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-text-inverted: #020617;
 
   /* Spacing */
   --space-1: 0.25rem;
@@ -57,11 +57,11 @@
   --radius-full: 9999px;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --shadow-glow-primary: 0 0 20px rgba(0, 209, 178, 0.2);
-  --shadow-glow-success: 0 0 20px rgba(16, 185, 129, 0.2);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-glow-primary: 0 0 24px rgba(245, 158, 11, 0.25);
+  --shadow-glow-success: 0 0 24px rgba(16, 185, 129, 0.25);
 
   /* Transitions */
   --transition-fast: all 0.15s ease;
@@ -69,7 +69,7 @@
   --transition-slow: all 0.4s ease;
 
   /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -194,14 +194,16 @@ img { max-width: 100%; }
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-  color: var(--color-text-inverted);
-  box-shadow: 0 4px 15px rgba(0, 209, 178, 0.3);
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #020617;
+  font-weight: 700;
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.35);
 }
 
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 209, 178, 0.4);
+  box-shadow: 0 6px 24px rgba(245, 158, 11, 0.5);
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
 }
 
 .btn-danger {
@@ -222,8 +224,9 @@ img { max-width: 100%; }
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.15);
+  background: rgba(245, 158, 11, 0.1);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .btn-success {
@@ -335,7 +338,7 @@ img { max-width: 100%; }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(10, 14, 26, 0.85);
+  background: rgba(2, 6, 23, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
@@ -351,7 +354,7 @@ img { max-width: 100%; }
 .navbar-brand {
   font-size: var(--font-size-xl);
   font-weight: 800;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -372,7 +375,7 @@ img { max-width: 100%; }
   top: 0; left: 50%;
   transform: translateX(-50%);
   width: 800px; height: 400px;
-  background: radial-gradient(ellipse at center, rgba(0,209,178,0.08) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -380,8 +383,8 @@ img { max-width: 100%; }
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  background: rgba(0,209,178,0.1);
-  border: 1px solid rgba(0,209,178,0.2);
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
   border-radius: var(--radius-full);
   color: var(--color-primary);
   font-size: var(--font-size-sm);
@@ -399,7 +402,7 @@ img { max-width: 100%; }
 }
 
 .hero-title span {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -441,7 +444,7 @@ img { max-width: 100%; }
 }
 
 .stat-card:hover {
-  border-color: rgba(0,209,178,0.2);
+  border-color: rgba(245, 158, 11, 0.4);
   transform: translateY(-3px);
   box-shadow: var(--shadow-glow-primary);
 }
