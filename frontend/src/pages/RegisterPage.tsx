@@ -184,10 +184,10 @@ export default function RegisterPage() {
               }}
             />
             <div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--color-primary)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--color-primary-dark)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                 Official Delegation Portal
               </div>
-              <h1 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#fff', lineHeight: 1.25, margin: '0.15rem 0 0.25rem' }}>
+              <h1 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--color-text-primary)', lineHeight: 1.25, margin: '0.15rem 0 0.25rem' }}>
                 Pastoral Delegation Registration
               </h1>
               <p style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', margin: 0 }}>
@@ -416,23 +416,23 @@ export default function RegisterPage() {
             <div
               className="card card-sm"
               style={{
-                background: 'rgba(2, 6, 23, 0.95)',
-                border: '1.5px solid var(--color-border)',
+                background: '#fffbeb',
+                border: '1.5px solid #fde68a',
                 margin: '1.5rem 0',
                 borderRadius: 'var(--radius-md)',
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem' }}>
+                <span style={{ color: '#78350f', fontSize: '0.85rem', fontWeight: 600 }}>
                   Pastoral Delegation Registration Fee
                 </span>
-                <span style={{ fontWeight: 800, color: 'var(--color-primary)', fontSize: '1.2rem' }}>
+                <span style={{ fontWeight: 800, color: 'var(--color-primary-dark)', fontSize: '1.25rem' }}>
                   KSh 1,000
                 </span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', color: '#92400e' }}>
                 <span>Payment Channel</span>
-                <span style={{ fontWeight: 600, color: '#fff' }}>M-PESA Paybill 9410300</span>
+                <span style={{ fontWeight: 700, color: 'var(--color-text-primary)' }}>M-PESA Paybill 9410300</span>
               </div>
             </div>
 

@@ -16,8 +16,8 @@ export default function LandingPage() {
                 src={PASTOR_IMAGE}
                 alt="Apostle Johnson Suleman"
                 style={{
-                  width: 38,
-                  height: 38,
+                  width: 40,
+                  height: 40,
                   borderRadius: '50%',
                   objectFit: 'cover',
                   border: '2px solid var(--color-primary)',
@@ -42,13 +42,12 @@ export default function LandingPage() {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '1rem',
-              background: 'rgba(15, 23, 42, 0.85)',
+              background: '#ffffff',
               border: '1.5px solid var(--color-border)',
               borderRadius: '9999px',
-              padding: '0.5rem 1.25rem 0.5rem 0.5rem',
+              padding: '0.5rem 1.35rem 0.5rem 0.5rem',
               marginBottom: '2rem',
               boxShadow: 'var(--shadow-md)',
-              backdropFilter: 'blur(10px)',
             }}
           >
             <img
@@ -60,13 +59,13 @@ export default function LandingPage() {
                 borderRadius: '50%',
                 objectFit: 'cover',
                 border: '2.5px solid var(--color-primary)',
-                boxShadow: '0 0 14px var(--color-primary-glow)',
+                boxShadow: '0 0 12px var(--color-primary-glow)',
               }}
             />
             <div style={{ textAlign: 'left' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                <span style={{ fontWeight: 800, fontSize: '0.95rem', color: '#fff' }}>Apostle Johnson Suleman</span>
-                <span style={{ color: 'var(--color-primary)', fontSize: '0.85rem' }}>✓</span>
+                <span style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--color-text-primary)' }}>Apostle Johnson Suleman</span>
+                <span style={{ color: 'var(--color-primary)', fontSize: '0.9rem' }}>✓</span>
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>
                 Senior Pastor & General Overseer · Omega Fire Ministries
@@ -111,7 +110,7 @@ export default function LandingPage() {
       </section>
 
       {/* Delegation Overview & Benefits */}
-      <section id="overview" style={{ padding: '3.5rem 0', borderTop: '1px solid var(--color-border)', background: 'rgba(15, 23, 42, 0.4)' }}>
+      <section id="overview" style={{ padding: '3.5rem 0', borderTop: '1px solid var(--color-border)', background: '#ffffff' }}>
         <div className="container-narrow">
           <div className="card" style={{ border: '1.5px solid var(--color-border)' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
@@ -133,9 +132,9 @@ export default function LandingPage() {
                 { icon: '⚡', title: 'Ministerial Impartation', desc: 'Special session for impartation of grace and apostolic unction' },
                 { icon: '🤝', title: 'Kingdom Network', desc: 'Connecting church leaders across Kenya and East Africa' },
               ].map((f) => (
-                <div className="card card-sm" key={f.title} style={{ background: 'var(--color-bg-primary)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div className="card card-sm" key={f.title} style={{ background: '#fdfbf7', border: '1px solid var(--color-border)' }}>
                   <div style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{f.icon}</div>
-                  <div style={{ fontWeight: 700, color: '#fff', marginBottom: '0.25rem', fontSize: '0.95rem' }}>{f.title}</div>
+                  <div style={{ fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '0.25rem', fontSize: '0.95rem' }}>{f.title}</div>
                   <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)', lineHeight: 1.6 }}>{f.desc}</div>
                 </div>
               ))}
@@ -146,8 +145,8 @@ export default function LandingPage() {
               style={{
                 marginTop: '2rem',
                 padding: '1.25rem',
-                background: 'rgba(245, 158, 11, 0.08)',
-                border: '1px dashed var(--color-primary)',
+                background: '#fffbeb',
+                border: '1.5px dashed #f59e0b',
                 borderRadius: 'var(--radius-md)',
                 display: 'flex',
                 alignItems: 'center',
@@ -157,10 +156,10 @@ export default function LandingPage() {
               }}
             >
               <div>
-                <div style={{ fontWeight: 800, color: 'var(--color-primary)', fontSize: '0.95rem' }}>
+                <div style={{ fontWeight: 800, color: '#92400e', fontSize: '0.95rem' }}>
                   Fee: KSh 1,000 via M-PESA
                 </div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                <div style={{ fontSize: '0.8rem', color: '#78350f' }}>
                   Paybill: 9410300 · Instant STK Push & SMS/Email Ticket
                 </div>
               </div>
@@ -178,6 +177,7 @@ export default function LandingPage() {
         borderTop: '1px solid var(--color-border)',
         padding: '2rem 0',
         textAlign: 'center',
+        background: '#ffffff',
         color: 'var(--color-text-muted)',
         fontSize: 'var(--font-size-xs)'
       }}>

@@ -117,8 +117,8 @@ export default function PaymentStatusPage() {
             }}
           />
           <div style={{ textAlign: 'left' }}>
-            <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#fff' }}>Kisumu Outpouring 2026</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--color-primary)' }}>Apostle Johnson Suleman · Pastoral Delegation</div>
+            <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--color-text-primary)' }}>Kisumu Outpouring 2026</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--color-primary-dark)', fontWeight: 600 }}>Apostle Johnson Suleman · Pastoral Delegation</div>
           </div>
         </div>
 
@@ -135,7 +135,7 @@ export default function PaymentStatusPage() {
               </div>
             )}
 
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '0.25rem' }}>
               {step === 'failed' ? 'Payment Unsuccessful' : step === 'done' ? 'Payment Confirmed!' : 'M-PESA STK Push'}
             </h2>
             <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.875rem' }}>{message}</p>
@@ -156,26 +156,27 @@ export default function PaymentStatusPage() {
                 <div
                   key={s.id}
                   className={`payment-step ${isDone ? 'done' : ''} ${isActive ? 'active' : ''}`}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.65rem 0', borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 0', borderBottom: '1px solid var(--color-border)' }}
                 >
                   <div
                     style={{
-                      width: 22,
-                      height: 22,
+                      width: 24,
+                      height: 24,
                       borderRadius: '50%',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontSize: '0.7rem',
+                      fontSize: '0.75rem',
                       fontWeight: 800,
-                      background: isDone ? 'var(--color-success)' : isActive ? 'var(--color-primary)' : 'rgba(255,255,255,0.1)',
-                      color: isDone || isActive ? '#020617' : 'var(--color-text-muted)',
+                      background: isDone ? '#dcfce7' : isActive ? '#fffbeb' : '#f1f5f9',
+                      border: `1.5px solid ${isDone ? '#16a34a' : isActive ? '#d97706' : '#cbd5e1'}`,
+                      color: isDone ? '#16a34a' : isActive ? '#b45309' : '#64748b',
                       flexShrink: 0,
                     }}
                   >
                     {isDone ? '✓' : idx + 1}
                   </div>
-                  <span style={{ fontSize: '0.85rem', fontWeight: isActive ? 700 : 400, color: isActive ? 'var(--color-primary)' : isDone ? 'var(--color-success)' : 'var(--color-text-secondary)' }}>
+                  <span style={{ fontSize: '0.85rem', fontWeight: isActive ? 700 : 500, color: isActive ? 'var(--color-primary-dark)' : isDone ? 'var(--color-success)' : 'var(--color-text-secondary)' }}>
                     {s.label}
                   </span>
                 </div>
@@ -186,18 +187,18 @@ export default function PaymentStatusPage() {
           {/* Paybill Instructions Box */}
           <div
             style={{
-              background: 'rgba(2, 6, 23, 0.85)',
-              border: '1px dashed var(--color-border)',
+              background: '#fffbeb',
+              border: '1.5px dashed #f59e0b',
               borderRadius: 'var(--radius-md)',
               padding: '1rem',
               fontSize: '0.8rem',
               marginBottom: '1.5rem',
             }}
           >
-            <div style={{ fontWeight: 700, color: 'var(--color-primary)', marginBottom: '0.35rem' }}>
+            <div style={{ fontWeight: 800, color: '#92400e', marginBottom: '0.35rem' }}>
               💡 Didn't receive the prompt?
             </div>
-            <div style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+            <div style={{ color: '#78350f', lineHeight: 1.6 }}>
               You can also pay manually via M-PESA:
               <br />
               <strong>Paybill:</strong> 9410300 · <strong>Amount:</strong> KSh 1,000

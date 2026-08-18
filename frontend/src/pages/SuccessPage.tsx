@@ -78,38 +78,38 @@ export default function SuccessPage() {
         <div
           className="card"
           style={{
-            border: '2px solid var(--color-primary)',
-            boxShadow: 'var(--shadow-glow-primary)',
-            background: 'linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(2, 6, 23, 0.98) 100%)',
-            padding: '2rem',
+            border: '2px solid #d97706',
+            boxShadow: 'var(--shadow-lg)',
+            background: '#ffffff',
+            padding: '2.25rem',
             position: 'relative',
             overflow: 'hidden',
             marginBottom: '1.75rem',
           }}
         >
           {/* Top Decorative Gold Bar */}
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: 'linear-gradient(90deg, #f59e0b, #fbbf24, #d97706)' }} />
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 6, background: 'linear-gradient(90deg, #f59e0b, #d97706, #b45309)' }} />
 
           {/* Event & Host Badge */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', paddingBottom: '1.5rem', borderBottom: '1px dashed var(--color-border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', paddingBottom: '1.5rem', borderBottom: '1.5px dashed #e8e0d5' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <img
                 src={PASTOR_IMAGE}
                 alt="Apostle Johnson Suleman"
                 style={{
-                  width: 58,
-                  height: 58,
+                  width: 60,
+                  height: 60,
                   borderRadius: '50%',
                   objectFit: 'cover',
-                  border: '2.5px solid var(--color-primary)',
-                  boxShadow: '0 0 14px var(--color-primary-glow)',
+                  border: '2.5px solid #d97706',
+                  boxShadow: '0 0 14px rgba(217, 119, 6, 0.25)',
                 }}
               />
               <div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--color-primary)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                <div style={{ fontSize: '0.75rem', color: '#b45309', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                   Apostle Johnson Suleman
                 </div>
-                <div style={{ fontWeight: 800, fontSize: '1.1rem', color: '#fff' }}>
+                <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--color-text-primary)' }}>
                   Kisumu Kenya Outpouring 2026
                 </div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
@@ -123,14 +123,14 @@ export default function SuccessPage() {
           </div>
 
           {/* Delegate Name & Pass Code */}
-          <div style={{ padding: '1.5rem 0', textAlign: 'center' }}>
+          <div style={{ padding: '1.75rem 0 1.25rem', textAlign: 'center' }}>
             <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.35rem' }}>
               Delegate Name & Title
             </div>
-            <h2 style={{ fontSize: '1.65rem', fontWeight: 800, color: '#fff', marginBottom: '0.35rem' }}>
+            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '0.35rem' }}>
               {reg.full_name}
             </h2>
-            <p style={{ color: 'var(--color-primary)', fontWeight: 600, fontSize: '0.95rem', margin: 0 }}>
+            <p style={{ color: '#b45309', fontWeight: 700, fontSize: '1rem', margin: 0 }}>
               {reg.organization || reg.church_ministry || 'Pastoral Delegate'}
             </p>
             {reg.registration_number && (
@@ -138,14 +138,14 @@ export default function SuccessPage() {
                 style={{
                   display: 'inline-block',
                   margin: '1rem auto 0',
-                  padding: '0.35rem 1rem',
-                  background: 'rgba(245, 158, 11, 0.1)',
-                  border: '1px solid var(--color-primary)',
+                  padding: '0.4rem 1.25rem',
+                  background: '#fffbeb',
+                  border: '1.5px solid #fde68a',
                   borderRadius: 'var(--radius-full)',
                   fontFamily: 'monospace',
                   fontWeight: 800,
-                  fontSize: '0.95rem',
-                  color: 'var(--color-primary)',
+                  fontSize: '1rem',
+                  color: '#92400e',
                 }}
               >
                 PASS ID: {reg.registration_number}
@@ -157,41 +157,42 @@ export default function SuccessPage() {
           {qr_code_base64 && (
             <div
               style={{
-                background: '#fff',
+                background: '#faf7f2',
+                border: '1.5px solid #e8e0d5',
                 padding: '1.25rem',
                 borderRadius: 'var(--radius-md)',
                 maxWidth: 240,
                 margin: '0 auto 1.5rem',
                 textAlign: 'center',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+                boxShadow: 'var(--shadow-sm)',
               }}
             >
               <img
                 src={qr_code_base64}
                 alt="Delegate QR Code"
-                style={{ width: '100%', height: 'auto', display: 'block', margin: '0 auto' }}
+                style={{ width: '100%', height: 'auto', display: 'block', margin: '0 auto', borderRadius: 6 }}
               />
-              <div style={{ fontSize: '0.7rem', color: '#020617', fontWeight: 800, marginTop: '0.5rem', letterSpacing: '0.04em' }}>
+              <div style={{ fontSize: '0.7rem', color: '#0f172a', fontWeight: 800, marginTop: '0.6rem', letterSpacing: '0.04em' }}>
                 OFFICIAL ENTRY QR PASS
               </div>
             </div>
           )}
 
           {/* Delegate Credentials Table */}
-          <div style={{ background: 'rgba(2, 6, 23, 0.6)', borderRadius: 'var(--radius-md)', padding: '1rem 1.25rem', fontSize: '0.85rem' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+          <div style={{ background: '#fbf9f5', border: '1px solid #e8e0d5', borderRadius: 'var(--radius-md)', padding: '1rem 1.25rem', fontSize: '0.85rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.85rem' }}>
               <div>
-                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>Email:</span>
-                <div style={{ color: '#fff', fontWeight: 600 }}>{reg.email}</div>
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>Email Address:</span>
+                <div style={{ color: 'var(--color-text-primary)', fontWeight: 600 }}>{reg.email}</div>
               </div>
               <div>
-                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>Phone:</span>
-                <div style={{ color: '#fff', fontWeight: 600 }}>{reg.phone}</div>
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>Phone Number:</span>
+                <div style={{ color: 'var(--color-text-primary)', fontWeight: 600 }}>{reg.phone}</div>
               </div>
               {payment?.mpesa_receipt && (
                 <div>
                   <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>M-PESA Receipt:</span>
-                  <div style={{ color: 'var(--color-success)', fontWeight: 700, fontFamily: 'monospace' }}>
+                  <div style={{ color: '#16a34a', fontWeight: 700, fontFamily: 'monospace' }}>
                     {payment.mpesa_receipt}
                   </div>
                 </div>
@@ -199,14 +200,14 @@ export default function SuccessPage() {
               {payment?.amount && (
                 <div>
                   <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>Amount Paid:</span>
-                  <div style={{ color: 'var(--color-primary)', fontWeight: 800 }}>
+                  <div style={{ color: '#b45309', fontWeight: 800 }}>
                     KSh {Number(payment.amount).toLocaleString()}
                   </div>
                 </div>
               )}
               <div>
                 <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>Payment Date:</span>
-                <div style={{ color: '#fff', fontWeight: 600 }}>{paidAt}</div>
+                <div style={{ color: 'var(--color-text-primary)', fontWeight: 600 }}>{paidAt}</div>
               </div>
             </div>
           </div>
