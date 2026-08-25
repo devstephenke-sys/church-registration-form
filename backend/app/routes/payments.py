@@ -64,10 +64,13 @@ def initiate_payment(data: STKPushRequest, db: Session = Depends(get_db)):
     try:
         # For Sandbox testing, Daraja might require specific details depending on environment,
         # but the daraja_client handles it transparently.
+        # Build a clean, readable account reference for the M-PESA prompt
+        # Safaricom limits AccountReference to 12 characters
+        account_ref = "KisumuCrusade"[:12]
         response = daraja_client.initiate_stk_push(
             phone=reg.phone,
             amount=int(event.amount),
-            account_ref=reg.id[:12] # Limit length of AccountReference
+            account_ref=account_ref
         )
         
         merchant_request_id = response.get("MerchantRequestID")
