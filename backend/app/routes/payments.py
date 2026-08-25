@@ -66,7 +66,7 @@ def initiate_payment(data: STKPushRequest, db: Session = Depends(get_db)):
         # but the daraja_client handles it transparently.
         # Build a clean, readable account reference for the M-PESA prompt
         # Safaricom limits AccountReference to 12 characters
-        account_ref = "KisumuCrusade"[:12]
+        account_ref = "KisumuEvent"
         response = daraja_client.initiate_stk_push(
             phone=reg.phone,
             amount=int(event.amount),
